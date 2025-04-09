@@ -1,0 +1,43 @@
+services:
+  simulator:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_USER=telraam_user
+      - POSTGRES_PASSWORD=telraam_user
+      - POSTGRES_DB=telraam_dev
+      - API_URL=simulator:8000
+      - START_TIME=1713951910 # 12 urenloop start 24
+  postgres:
+    image: docker.io/postgres:17-alpine
+    environment:
+      - POSTGRES_PASSWORD=telraam_user
+      - POSTGRES_USER=telraam_user
+      - POSTGRES_DB=telraam_dev
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  telraam:
+    build: localhost/telraam:latest
+    depends_on:
+      - postgres
+      - simulator 
+    volumes:
+      - ./devConfig.yml:/telraam/src/main/resources/telraam/devConfig.yml:rw,z
+      - ./devConfig.properties:/telraam/src/main/resources/telraam/devConfig.properties:ro,z
+
+  loxsi:
+    image: localhost/loxsi:latest
+    depends_on:
+      - telraam
+    volumes:
+      - ./config.yml:/app/config.yml:ro,Z
+    ports:
+      - 8787:80
+    command: /app/.venv/bin/uvicorn --host 0.0.0.0 --port 80 main:app
+
+volumes:
+  db:
+
