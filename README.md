@@ -5,6 +5,10 @@ replay :- replay.
 This replays `urenlopen` from previous editions.
 It implements a mockup ronny that sends out realistic data from previous editions.
 
+A similar but different project named [SIMSALABIM](https://github.com/12urenloop/SIMSALABIM) generates events to simulate specific or new situations.
+
+This project supersedes [mityri](https://github.com/12urenloop/mityri).
+
 ### Requirements
 
 Ronny dumps from a previous edition are required; these can be downloaded from [https://dataset.12urenloop.be](https://dataset.12urenloop.be).
@@ -19,7 +23,6 @@ Ronny dumps from a previous edition are required; these can be downloaded from [
     - `START_TIME`: Unix timestamp of when the replay should start. The default is the start of the 12urenloop in 2024.
 4. Create the database (according to the env) and initialize it with the telraam dump for the correct edition.
     - [https://dataset.12urenloop.be](https://dataset.12urenloop.be) should also include a telraam.sql backup. For restoring the database, see [the telraam wiki](https://github.com/12urenloop/Telraam/wiki/Playing-with-the-database#exporting-the-database)
-
 
 #### Setup With docker
 
